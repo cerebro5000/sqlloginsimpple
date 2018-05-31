@@ -54,16 +54,15 @@ public class coneccion {
                 titulo.setId(Integer.parseInt(resultado.getString("id")));
             }
             instancia.execute("INSERT INTO usuarios(usuario,pass,roles_id,titulosprof_id) "
-                    + "values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+")");
-            resultado = instancia.executeQuery("select * from usuarios where usuario=\""+user.getUsuario()+"\",\""+titulo.getId()+"\"\"");
+                    + "values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+","+titulo.getId()+")");
+            resultado = instancia.executeQuery("select * from usuarios where usuario=\""+user.getUsuario()+"\"");
             resultado.first();
             if (resultado != null) {
                 user.setId(Integer.parseInt(resultado.getString("id")));
             }
             instancia.execute("INSERT INTO datosusuario(usuarios_id,nombre,apellido)"
                     + "values(\""+user.getId()+"\",\""+datos.getNombre()+"\","
-                            + "\""+datos.getApellido()+")");
-            
+                            + "\""+datos.getApellido()+"\")");
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(coneccion.class.getName()).log(Level.SEVERE, null, ex);
