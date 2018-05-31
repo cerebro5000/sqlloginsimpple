@@ -48,15 +48,21 @@ public class coneccion {
             if (resultado != null) {
                 rol.setId(Integer.parseInt(resultado.getString("id")));
             }
-            instancia.execute("INSERT INTO usuarios(usuario,pass,roles_id,) values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+")");
-            resultado = instancia.executeQuery("select * from usuarios where usuario=\""+user.getUsuario()+"\"");
+            resultado = instancia.executeQuery("select * from titulosprof where titulo=\""+titulo.getTitulo()+"\"");
+            resultado.first();
+            if (resultado != null) {
+                titulo.setId(Integer.parseInt(resultado.getString("id")));
+            }
+            instancia.execute("INSERT INTO usuarios(usuario,pass,roles_id,titulosprof_id) "
+                    + "values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+")");
+            resultado = instancia.executeQuery("select * from usuarios where usuario=\""+user.getUsuario()+"\",\""+titulo.getId()+"\"\"");
             resultado.first();
             if (resultado != null) {
                 user.setId(Integer.parseInt(resultado.getString("id")));
             }
-            instancia.execute("INSERT INTO datosusuario(usuarios_id,nombre,apellido,titulosprof)"
+            instancia.execute("INSERT INTO datosusuario(usuarios_id,nombre,apellido)"
                     + "values(\""+user.getId()+"\",\""+datos.getNombre()+"\","
-                            + "\""+datos.getApellido()+"\",\""+titulo.getId()+"\")");
+                            + "\""+datos.getApellido()+")");
             
             return true;
         } catch (SQLException ex) {
@@ -75,6 +81,7 @@ public class coneccion {
                 priv.setId(Integer.parseInt(resultado.getString("id")));
             }
             instancia.execute("INSERT INTO roles(nombre,privilegios_id) values(\""+rol.getNombre()+"\",\""+priv.getId()+"\")");
+            coneccion.close();
             return true;
         } catch (SQLException ex) {
             System.out.println("error de conexion");
@@ -98,7 +105,7 @@ public class coneccion {
         try {
             coneccion = conectar();
             Statement instancia = coneccion.createStatement();
-            instancia.execute("INSERT INTO titulosprof(nombre) values(\""+titulo.getTitulo()+"\")");
+            instancia.execute("INSERT INTO titulosprof(titulo) values(\""+titulo.getTitulo()+"\")");
             coneccion.close();
             return true;
         } catch (SQLException ex) {

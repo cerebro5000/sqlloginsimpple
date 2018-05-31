@@ -26,16 +26,19 @@ public class mainpruebas {
         datosusuarios datos = new datosusuarios("maria", "pancha");
         titulosprof titulo = new titulosprof("licenciatura");
         
+        
         if(coneccion.crearprivilegio(privilegio))
             System.out.println("se agrego el privilegio de " + privilegio.getModulo());
         else
             System.out.println("no se pudo agregar");
+        
         if(coneccion.crearrol(rol, privilegio))
             System.out.println("se agrego el rol de "+ rol.getNombre());
         else
             System.out.println("no se agrego");
+        
         if(coneccion.creartitulo(titulo))
-            System.out.println("seagrego correctamente");
+            System.out.println("sea grego correctamente");
         else
             System.out.println("");
         
