@@ -25,7 +25,7 @@ public class mainpruebas {
         usuarios maria = new usuarios("maria","mariasgamesa");
         datosusuarios datos = new datosusuarios("maria", "pancha");
         titulosprof titulo = new titulosprof("licenciatura");
-        
+        titulosprof ing = new titulosprof("ingenieria");
         
         if(coneccion.crearprivilegio(privilegio))
             System.out.println("se agrego el privilegio de " + privilegio.getModulo());
@@ -44,7 +44,12 @@ public class mainpruebas {
         
         if(coneccion.crearusuario(maria, datos, rol, titulo))
             System.out.println("se agrego el usuario " + datos.getNombre());
+        if (coneccion.creartitulo(ing)) {
+            System.out.println("titulo ingeniero creado");
+        }
         
-        
+        if (coneccion.eliminartitulo(ing)) {
+            System.out.println(ing.getTitulo()+" eliminado");
+        }
     }
 }
