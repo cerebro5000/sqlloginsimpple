@@ -9,6 +9,7 @@ import coneccion.coneccion;
 import tablas.datosusuarios;
 import tablas.privilegios;
 import tablas.roles;
+import tablas.titulosprof;
 import tablas.usuarios;
 
 /**
@@ -23,7 +24,7 @@ public class mainpruebas {
         roles rol = new roles("vendedor");
         usuarios maria = new usuarios("maria","mariasgamesa");
         datosusuarios datos = new datosusuarios("maria", "pancha");
-        
+        titulosprof titulo = new titulosprof("licenciatura");
         
         if(coneccion.crearprivilegio(privilegio))
             System.out.println("se agrego el privilegio de " + privilegio.getModulo());
@@ -33,7 +34,12 @@ public class mainpruebas {
             System.out.println("se agrego el rol de "+ rol.getNombre());
         else
             System.out.println("no se agrego");
-        if(coneccion.crearusuario(maria, datos, rol))
+        if(coneccion.creartitulo(titulo))
+            System.out.println("seagrego correctamente");
+        else
+            System.out.println("");
+        
+        if(coneccion.crearusuario(maria, datos, rol, titulo))
             System.out.println("se agrego el usuario " + datos.getNombre());
         
         

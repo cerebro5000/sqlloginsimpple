@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import tablas.datosusuarios;
 import tablas.privilegios;
 import tablas.roles;
+import tablas.titulosprof;
 import tablas.usuarios;
 /**
  *
@@ -38,7 +39,7 @@ public class coneccion {
         return coneccion;
     }
     
-    public static boolean crearusuario(usuarios user, datosusuarios datos, roles rol){
+    public static boolean crearusuario(usuarios user, datosusuarios datos, roles rol, titulosprof titulo){
         try {
             coneccion = conectar();
             Statement instancia = coneccion.createStatement();
@@ -47,13 +48,16 @@ public class coneccion {
             if (resultado != null) {
                 rol.setId(Integer.parseInt(resultado.getString("id")));
             }
-            instancia.execute("INSERT INTO usuarios(usuario,pass,roles_id) values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+")");
+            instancia.execute("INSERT INTO usuarios(usuario,pass,roles_id,) values(\""+user.getUsuario()+"\",\""+user.getPass()+"\","+rol.getId()+")");
             resultado = instancia.executeQuery("select * from usuarios where usuario=\""+user.getUsuario()+"\"");
             resultado.first();
             if (resultado != null) {
                 user.setId(Integer.parseInt(resultado.getString("id")));
             }
-            instancia.execute("INSERT INTO datosusuario(usuarios_id,nombre,apellido) values(\""+user.getId()+"\",\""+datos.getNombre()+"\",\""+datos.getApellido()+"\")");
+            instancia.execute("INSERT INTO datosusuario(usuarios_id,nombre,apellido,titulosprof)"
+                    + "values(\""+user.getId()+"\",\""+datos.getNombre()+"\","
+                            + "\""+datos.getApellido()+"\",\""+titulo.getId()+"\")");
+            
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(coneccion.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,6 +86,19 @@ public class coneccion {
             coneccion = conectar();
             Statement instancia = coneccion.createStatement();
             instancia.execute("INSERT INTO privilegios(modulo) values(\""+priv.getModulo()+"\")");
+            coneccion.close();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("error de conexion");
+        }
+        return false;
+    }
+    
+    public static boolean creartitulo(titulosprof titulo){
+        try {
+            coneccion = conectar();
+            Statement instancia = coneccion.createStatement();
+            instancia.execute("INSERT INTO titulosprof(nombre) values(\""+titulo.getTitulo()+"\")");
             coneccion.close();
             return true;
         } catch (SQLException ex) {
